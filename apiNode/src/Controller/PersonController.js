@@ -49,7 +49,8 @@ module.exports = {
 
 
     async remove(req, res) {
-        await Person.findByIdAndRemove(req.params.id);
+        const person = await Person.findById(req.params.id);
+        await person.remove();
         res.send("removido com sucesso!");
     },
 

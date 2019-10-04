@@ -1,3 +1,5 @@
+@import "http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css";
+
 .person-list{
     max-width: 700px;
     margin: 20px auto 0;
@@ -47,26 +49,14 @@
     display: flex;
 }
 
-.header_search_input.icon{
-    position: absolute;
-    left: 9px;
-    top: 8px;
-}
-
-.person-list .search-icon{
-    width: 14px;
-    height: 14px;
-    font-size: 14px;
-    background-image: url("../../data/search.png")
-}
-
-.icon {
+.ion-search {
     display: inline-block;
     vertical-align: middle;
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: 50%;
     margin-left:5px;
+    font-size: 18px;
 }
 
 .header_search_input input{
@@ -86,5 +76,55 @@
     align-items: center;
 }
 
+.alerta{
+    width: 500px;
+    overflow: hidden;
+    background: #dda18e;
+    box-shadow: 0 0 20px rgb(156, 154, 154);
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    padding: 10px;
+    text-align: center;
+    display: none;
+}
 
+#confirmado{
+    color: #2ecc71;
+    font-size: 40px;
+    display: none;
+    margin: 20px 0;
+}
+
+#negado{
+    color: #e74c3c;
+    font-size: 40px;
+    display: none;
+    margin: 20px 0;
+}
+
+.fechar, .editar, .excluir{
+    font-size: 18px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #da552d;
+    display: inline-block;
+    border-radius: 4px;
+    border: none;
+    margin: 0px 8px;
+}
+
+.fechar{
+    background: #da552d;
+}
+.editar{
+    background: #3498db;
+}
+.excluir{
+    background: #c0392b;
+}
 
