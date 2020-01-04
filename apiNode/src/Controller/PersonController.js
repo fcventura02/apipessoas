@@ -21,26 +21,27 @@ module.exports = {
     async update(req, res) {
         const person = await Person.findById(req.params.id, function (err, person) {
             if (!person)
-                res.status(404).send("data is not found");
+                res.status(404)
             else {
-                if (req.body.person_name != null)
+                if (req.body.person_name != '')
                     person.person_name = req.body.person_name;
                 else person.person_name = person.person_name;
 
 
                 if (req.body.person_cpf != null) {
+                    
                     if (testCpf(req.body.person_cpf)) {
                         person.person_cpf = req.body.person_cpf;
                     } else {
-                        res.status(400).send("Cpf Invalido");
+                        res.status(400).json({err:"Cpf Invalido"});
                     }
                 } else person.person_cpf = person.person_cpf;
 
                 person.save().then(person => {
-                    res.json({ update: 'upddate completo', person })
+                    res.status(200).json({ update: 'upddate completo', person })
                 })
                     .catch(err => {
-                        res.status(400).send("Não foi possivel fazer o update no database");
+                        res.status(400).send("Não foi possivel fazer o update no database " + err);
                     });
             }
         });

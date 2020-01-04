@@ -14,7 +14,6 @@ export class Search extends Component {
         }
         let page = 1;
         let result = [];
-        console.log(this.props.obj.personInfo)
         for (page; page <= this.props.obj.personInfo.pages; page++) {
             result = result.concat(await api.get(`/list?page=${page}`).then((response) => {
                 return tiradata(response)

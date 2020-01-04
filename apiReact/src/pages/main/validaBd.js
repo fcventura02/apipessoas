@@ -4,7 +4,6 @@ export class ValidaBd extends Component {
 
     BdVazio = () => {
         const total = this.props.obj
-        console.log(total === undefined)
         if (total === 0) {
             return (<h5>
                 Seu banco de dados está vazio, por favor vá em create e alimente seu

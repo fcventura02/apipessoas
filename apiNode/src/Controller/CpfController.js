@@ -31,8 +31,8 @@ module.exports = (TesteCpf) => {
       : 0
 
   const isValidCPF = (cpfFull) => {
-
     const cpf = getCpfToCheckInArray(cpfFull)
+    console.log(cpfFull)
     const firstDigit = getValidationDigit(10)(cpf)
     const secondDigit = getValidationDigit(11)(cpf.concat(firstDigit))
 
@@ -41,7 +41,6 @@ module.exports = (TesteCpf) => {
   }
 
   const validade = (cpf) => NOT(isSameDigitsCPF(cpf)) && isValidCPF(cpf);
-
 
   return validade(TesteCpf);
 }
