@@ -1,10 +1,10 @@
 const Person = require('../models/PersonModel');
 const success = { creat: 'Add successfully' };
-const testCpf = require('./CpfController');
+const { ValidaCpf } = require('./CpfController');
 module.exports = {
     async index(req, res) {
         const { page = 1 } = req.query;
-        const person = await Person.paginate({}, { page, limit:5});
+        const person = await Person.paginate({}, { page, limit: 5 });
         res.json(person);
     },
 
@@ -19,21 +19,23 @@ module.exports = {
     },
 
     async update(req, res) {
-        const person = await Person.findById(req.params.id, function (err, person) {
+        await Person.findById(req.params.id, function (err, person) {
+            const { person_cpf, person_name } = req.body
+            const validaCpf = new ValidaCpf(person_cpf)
             if (!person)
                 res.status(404)
             else {
-                if (req.body.person_name != '')
-                    person.person_name = req.body.person_name;
+                if (person_name != '')
+                    person.person_name = person_name;
                 else person.person_name = person.person_name;
 
 
-                if (req.body.person_cpf != null) {
-                    
-                    if (testCpf(req.body.person_cpf)) {
-                        person.person_cpf = req.body.person_cpf;
+                if (person_cpf != null) {
+
+                    if (validaCpf.getValorCpf() && person_cpf.length === 11) {
+                        person.person_cpf = person_cpf;
                     } else {
-                        res.status(400).json({err:"Cpf Invalido"});
+                        res.status(400).json({ err: "Cpf Invalido" });
                     }
                 } else person.person_cpf = person.person_cpf;
 
@@ -57,13 +59,14 @@ module.exports = {
 
 
     async create(req, res) {
-
-        if ((testCpf(req.body.person_cpf))&&(req.body.person_cpf.length === 11))
-            if (req.body.person_name != null && req.body.person_name != " "){
-            const person = await Person.create(req.body);
-            res.status(200).json({ success, person });
-        }else (res.status(400).send("Nome invalido"));
-        else (res.status(400).send("Cpf invalido"));
+        const { person_cpf, person_name } = req.body
+        const validaCpf = new ValidaCpf(person_cpf)
+        if ((validaCpf.getValorCpf()) && (person_cpf.length === 11))
+            if (person_name != null && person_name != "" && person_name != " ") {
+                const person = await Person.create(req.body);
+                res.status(200).json({ success, person });
+            } else (res.status(400).json({ success: "nome invalido" }));
+        else (res.status(400).json({ success: "Cpf invalido" }))
     }
 
 
